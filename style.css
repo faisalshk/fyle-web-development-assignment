@@ -9,6 +9,7 @@
   --lightGrey: #f4f4f4;
   --midLightGrey: #f6f6f6;
   --skin: #672c2c1f;
+  --aktiv: aktiv-grotesk, sans-serif;
 }
 
 .cormorant-sc-semibold {
@@ -21,6 +22,10 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Cormorant SC", serif;
+}
+
+.hidden {
+  display: none;
 }
 
 .header {
@@ -63,10 +68,12 @@
   button {
     width: 160px;
     height: 50px;
-    background: var(--red) 0% 0% no-repeat padding-box;
+    background-color: var(--red);
     border-radius: 2px;
-    font: normal normal 600 14px/26px Poppins;
+    font-size: 14px;
+    font-weight: 600;
     letter-spacing: 1.4px;
+    font-family: "Poppins", sans-serif;
     color: var(--white);
     border-radius: 2px;
     border: none;
@@ -125,30 +132,87 @@
 
 .services-flex {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
   align-self: flex-end;
   gap: 10px;
   margin-top: 30px;
   overflow: hidden;
+  /* width: 1455px; */
+
+  max-width: 1500px;
+  width: 100%;
+  position: relative;
+}
+
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 4) - 12px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 36px;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel.no-transition {
+  scroll-behavior: auto;
+}
+.carousel.dragging {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+.carousel.dragging .card {
+  cursor: grab;
+  user-select: none;
+}
+.carousel :where(.card, .img) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel .card {
+  scroll-snap-align: start;
+  height: auto;
+  list-style: none;
+  cursor: pointer;
+  flex-direction: column;
+  border-radius: 8px;
+  perspective: 1000px; /* Add perspective for the flip effect */
 }
 
 .service-item {
-  max-width: calc(25% - 20px);
   border-radius: 5px;
-  overflow: hidden;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  width: 370px;
-  height: 526px;
+
+  width: 100%;
+  height: 100%;
+
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
 }
 
-.service-item img {
+.card:hover .service-item {
+  transform: rotateY(180deg);
+}
+
+.service-item .service-item-img,
+.service-content {
+  backface-visibility: hidden;
+}
+
+.service-item-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  overflow: hidden;
 }
 
 .service-content {
@@ -161,6 +225,13 @@
   text-align: left;
   flex: 1;
   background-color: var(--red);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: rotateY(180deg);
 
   .service-icon img {
     display: block;
@@ -185,105 +256,67 @@
   text-align: center;
 }
 
-.btn {
+.read-more-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   width: 185px;
-  height: 50px;
   background-color: var(--white);
+  width: 185px;
+  height: 50px;
+  border-radius: 2px;
 
   .read-more {
     color: var(--red);
-    text-decoration: none;
     font-weight: 600;
     font-size: 14px;
-    line-height: 24px;
     font-family: "Poppins", sans-serif;
+    margin-bottom: 0;
+    text-decoration: none;
   }
 
-  img {
-    display: block;
+  .arrow {
     width: 40px;
     height: 20px;
     object-fit: contain;
   }
 }
 
-/* dots container */
-
-.dotstyle {
+.card:hover .service-content {
   display: flex;
-  margin-top: 40px;
-  margin-left: 445px;
 }
 
-.dotstyle ul {
+.card:hover .service-item .service-item-img {
+  display: none;
+}
+
+/* dots container */
+.dot-container {
+  margin-top: 50px;
+  width: 90px;
+  height: 60px;
   position: relative;
+  left: 454px;
+}
+.dots {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  cursor: default;
+  gap: 10px;
 }
 
-.dotstyle li {
-  position: relative;
-  display: block;
-  float: left;
-  margin: 0 16px;
+.dots img {
   width: 8px;
   height: 8px;
-  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
-.dotstyle li a {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  border-radius: 50%;
-  background-color: var(--black);
-  text-indent: -999em;
-  cursor: pointer; /* make the text accessible to screen readers */
-  position: absolute;
-}
-.dotstyle li a:focus {
-  outline: none;
-}
-
-.dotstyle-smalldotstroke li {
-  border-radius: 50%;
-  /* box-shadow: 0 0 0 2px var(--black); */
-  -webkit-transition: box-shadow 0.3s ease;
-  transition: box-shadow 0.3s ease;
-}
-
-.dotstyle-smalldotstroke li a {
-  background-color: var(--black);
-  -webkit-transition: background-color 0.3s ease, -webkit-transform 0.3s ease;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.dotstyle-smalldotstroke li a:hover,
-.dotstyle-smalldotstroke li a:focus,
-.dotstyle-smalldotstroke li.current a {
-  background-color: var(--red);
-}
-
-.dotstyle-smalldotstroke li.current a {
-  -webkit-transform: scale(0.4);
-  transform: scale(0.4);
-}
-
-.dotstyle-smalldotstroke li.current {
-  box-shadow: 0 0 0 2px var(--red);
-  width: 20px;
-  height: 20px;
+.dots img:hover,
+.dots .current-dot {
+  width: 35px;
+  height: 30px;
+  content: url("./assets/dot-1.svg");
 }
 
 /* why choose use section */
@@ -388,6 +421,14 @@
 .project-img {
   width: 770px;
   height: 567px;
+  transition: 300ms ease-in-out;
+  transition-delay: 200ms;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .lists {
@@ -421,6 +462,8 @@
   background-color: var(--red);
   color: var(--white);
 }
+
+/* growth section */
 
 .growth-container {
   margin-top: 100px;
@@ -492,6 +535,10 @@
   }
 }
 
+.growth:hover {
+  box-shadow: 3px 6px 20px #672c2c1f;
+}
+
 .growth-current {
   box-shadow: 3px 6px 20px #672c2c1f;
 }
@@ -556,4 +603,295 @@
       color: var(--midDarkGrey);
     }
   }
+}
+
+.companies-container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-img {
+  position: relative;
+}
+
+.companies {
+  position: absolute;
+}
+
+/* form submission */
+.form-container {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 28rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 450px;
+  height: 400px;
+
+  z-index: 5;
+  position: absolute;
+  top: 25%;
+  left: 30%;
+
+  transform: translate(0%, 0%);
+}
+
+.close-btn {
+  position: absolute;
+  top: 2px;
+  left: 95%;
+  background: none;
+  border: none;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.form-heading {
+  margin-bottom: 1rem;
+  font-size: 20px;
+  line-height: 1.75rem;
+  font-weight: 600;
+  font-family: aktiv-grotesk, sans-serif;
+}
+
+#form {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.email {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+
+  input {
+    font-size: 16px;
+    padding: 10px 5px;
+    width: 100%;
+    font-family: aktiv-grotesk, sans-serif;
+    border: 1px solid var(--grey);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+
+    transition: border-color 0.2s ease;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  label {
+    font-size: 16px;
+    padding: 10px 5px;
+    font-family: aktiv-grotesk, sans-serif;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: all 0.2s ease;
+    color: var(--grey);
+  }
+}
+
+.email input:focus + label,
+.email input:not(:placeholder-shown) + label {
+  top: -20px;
+  font-size: 14px;
+  color: var(--grey);
+}
+
+.name-inputs {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+  position: relative;
+
+  input {
+    font-size: 16px;
+    padding: 10px 5px;
+    font-family: aktiv-grotesk, sans-serif;
+    border: 1px solid var(--grey);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+
+    transition: border-color 0.2s ease;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  label {
+    font-size: 16px;
+    padding: 10px 5px;
+    font-family: aktiv-grotesk, sans-serif;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: all 0.2s ease;
+    color: var(--grey);
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: -20px;
+    font-size: 14px;
+    color: var(--grey);
+  }
+}
+
+/* .checkbox-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+
+  label {
+    font-family: aktiv-grotesk, sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    align-self: baseline;
+    color: #616678;
+  }
+
+  input {
+    width: 30px;
+    height: 30px;
+  }
+
+  input:hover {
+    background-color: #ccc;
+  }
+} */
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: aktiv-grotesk, sans-serif;
+  font-size: 14px;
+  color: #616678;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--red);
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: var(--red);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 6px;
+  top: 0px;
+  width: 7px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.contact-btn {
+  width: 386px;
+  height: 52px;
+  font-size: 18px;
+  font-family: var(--aktiv);
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--red);
+  border-style: none;
+  border-radius: 4px;
+}
+
+.loader svg {
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite; /* Apply animation */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
 }
