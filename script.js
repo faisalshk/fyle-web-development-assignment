@@ -43,6 +43,7 @@ dots.forEach((dot) => dot.addEventListener("click", handleDotClick));
 // Initialize dots on load
 updateDots();
 
+// form submission
 const form = document.getElementById("form");
 form.addEventListener("submit", formSubmit);
 
@@ -90,6 +91,7 @@ closeBtn.addEventListener("click", close);
 
 overlay.addEventListener("click", close);
 
+//change project Image
 projectList.addEventListener("click", function (e) {
   const listClicked = e.target.closest(".list");
   console.log(listClicked);
@@ -101,6 +103,8 @@ projectList.addEventListener("click", function (e) {
   });
 
   listClicked.classList.add("current");
+
+  // setTimeout(() => {}, 100);
 
   if (listClicked.dataset.img == "1") {
     projectImg.src = "./assets/japan2.jpg";

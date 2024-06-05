@@ -611,10 +611,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .background-img {
   position: relative;
+  object-fit: cover;
+  width: 100%;
 }
 
 .companies {
