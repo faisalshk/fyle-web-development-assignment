@@ -50,7 +50,8 @@ form.addEventListener("submit", formSubmit);
 function formSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-
+  contactBtn.classList.add("hidden");
+  loader.classList.remove("hidden");
   fetch("https://getform.io/f/nbdozoga", {
     method: "POST",
     body: formData,
@@ -59,8 +60,6 @@ function formSubmit(e) {
     },
   })
     .then((response) => {
-      contactBtn.classList.add("hidden");
-      loader.classList.remove("hidden");
       if (response.ok) {
         loader.classList.add("hidden");
         contactBtn.classList.remove("hidden");
@@ -69,7 +68,6 @@ function formSubmit(e) {
         overlay.classList.add("hidden");
         alert("Form Submitted Sucessfully, We will contact you shortly!!.");
       } else {
-        // Handle errors if needed
         console.error("Form submission failed:", response.statusText);
       }
     })
