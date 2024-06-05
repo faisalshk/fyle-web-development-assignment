@@ -67,6 +67,7 @@ function formSubmit(e) {
         e.target.reset();
         formContainer.classList.add("hidden");
         overlay.classList.add("hidden");
+        alert("Form Submitted Sucessfully, We will contact you shortly!!.");
       } else {
         // Handle errors if needed
         console.error("Form submission failed:", response.statusText);
